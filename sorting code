@@ -1,0 +1,124 @@
+#include<iostream>
+using namespace std;
+
+#define MAXSIZE 10
+
+struct sqlist
+{
+	int arr[MAXSIZE+1];
+	int length;
+};
+void swap(sqlist* l, int i, int j)
+{
+  int temp = l->arr[i];
+  l->arr[i]= l->arr[j];
+  l->arr[j]= temp;
+};
+
+bool isempty(sqlist* l)
+{
+	if(l->length == 0)
+  {
+  	cout << "The list is empty" << endl;
+  	return true;
+  }
+  return false;
+};
+
+bool selection_sort (sqlist* l)
+{
+  if(isempty(l))
+  	return false;
+  int smallest;
+  for(int i = 1; i < l->length; i++)
+  {
+  	smallest = i;
+  	for(int j = i+1; j <= l->length; j++)
+  	{
+  		if(l->arr[smallest] > l->arr[j])
+  		{
+  			smallest = j;
+  		}
+  	}
+  	if(smallest != i)
+  		swap(l,smallest,i);
+  }
+  return true;
+};
+
+
+bool buble (sqlist* l)
+{
+  if(isempty(l))
+  	return false;
+  for(int i = l->length; i > 0; i--)
+  {
+  	for(int j=1; j<i; j++)
+  	{
+  		if(l->arr[j]>l->arr[j+1])
+  			swap(l,j,j+1);
+  	}
+  }
+  return true;
+};
+
+bool buble2(sqlist* l)
+{
+  if(isempty(l))
+  	return false;
+  int Lastunsort =  l->length;
+  while(Lastunsort > 0)
+  {
+  	int Lastswap = 0;
+  	for(int j = 1; j < Lastunsort; j++)
+  	{
+  		if(l->arr[j] > l->arr[j+1])
+  			{
+  				swap(l,j,j+1);
+                Lastswap = j;
+  			}
+  	}
+  	Lastunsort = Lastswap;
+  }
+  return true;
+};
+bool Insertion_sort(sqlist* l)
+{
+  if(isempty(l))
+  	return false;
+  int i, j;
+  for(i = 2; i<=l->length ;i++)
+  {
+  	if(l->arr[i]<l->arr[i-1])
+  	{
+  		l->arr[0] = l->arr[i];
+  		for(j=i-1;l->arr[j]>l->arr[0];j--)
+  			l->arr[j+1] = l->arr[j]; //如果比插入的元素大往后挪动位置
+  		l->arr[j+1] = l->arr[0];  // j+1为插入元素应该在的位置
+  	}
+  }
+  return true;
+};
+
+int main() 
+{
+	sqlist l;
+	l.length = 0;
+	l.arr[0] = 0;
+	cout << "please enter number into array." << endl;
+	int i = 1;
+	
+	while(l.length<MAXSIZE && cin >> l.arr[i]) 
+	{
+      i++;
+      l.length++;
+	}
+	cout << endl;
+	if(Insertion_sort(&l))
+	{
+		for(int i = 1; i <= l.length ; i++ )
+    	    cout << l.arr[i] << endl;
+	}
+	cout << endl;
+    cout << l.length << endl;
+}
